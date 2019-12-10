@@ -178,4 +178,30 @@ echo "Fecha cambiada satisfactoriamente en myjobhelper.xml \n";
 echo "<br>";
 }//If Borrado
 }//If Apertura
+
+/*--------------------------
+//Actualizacion de careerjet
+--------------------------*/
+if (!$fp = fopen("careerjet.xml", "a+")){
+    echo "No se ha podido abrir el archivo";
+}else{
+$contents = fread($fp, filesize("careerjet.xml"));
+$posicion_inicio = strpos($contents, "<postdate>");
+$posicion_final = strpos($contents, "<expirydate>");
+$paso1 = substr($contents, $posicion_inicio,32);
+$paso3 = substr($contents, $posicion_final,34);
+if (!$fp = fopen("careerjet.xml", "w+")){
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+}else{
+$paso2 = str_replace($paso1, "<postdate>
+<![CDATA[ $fechae", $contents);
+$paso4 = str_replace($paso3, "<expirydate>
+<![CDATA[ $fechaen", $paso2);
+fwrite($fp, "");
+fwrite($fp, $paso4);
+fclose($fp);
+echo "Fecha cambiada satisfactoriamente en careerjet.xml \n";
+echo "<br>";
+}//If Borrado
+}//If Apertura
 ?>
