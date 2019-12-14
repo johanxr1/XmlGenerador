@@ -204,4 +204,49 @@ echo "Fecha cambiada satisfactoriamente en careerjet.xml \n";
 echo "<br>";
 }//If Borrado
 }//If Apertura
+
+/*------------------------
+//Actualizacion de usaadzunaFULL
+------------------------*/
+if (!$fp = fopen("usaadzunaFULL.xml", "a+")){
+    echo "No se ha podido abrir el archivo";
+}else{
+$contents = fread($fp, filesize("usaadzunaFULL.xml"));
+$posicion_inicio = strpos($contents, "<date>");
+$paso1 = substr($contents, $posicion_inicio,16);
+if (!$fp = fopen("usaadzunaFULL.xml", "w+")){
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+}else{
+$paso2 = str_replace($paso1, "<date>$fechaa", $contents);
+fwrite($fp, "");
+fwrite($fp, $paso2);
+fclose($fp);
+echo "Fecha cambiada satisfactoriamente en usaadzunaFULL.xml \n";
+echo "<br>";
+}//If Borrado
+}//If Apertura
+
+/*------------------------
+//Actualizacion de usaJoobleFULL
+------------------------*/
+if (!$fp = fopen("usajoobleFULL.xml", "a+")){
+    echo "No se ha podido abrir el archivo";
+}else{
+$contents = fread($fp, filesize("usajoobleFULL.xml"));
+$posicion_inicio = strpos($contents, "<pubdate>");
+$posicion_final = strpos($contents, "<expire>");
+$paso1 = substr($contents, $posicion_inicio,19);
+$paso3 = substr($contents, $posicion_final,18);
+if (!$fp = fopen("usajoobleFULL.xml", "w+")){
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+}else{
+$paso2 = str_replace($paso1, "<pubdate>$fecha", $contents);
+$paso4 = str_replace($paso3, "<expire>$fechan", $paso2);
+fwrite($fp, "");
+fwrite($fp, $paso4);
+fclose($fp);
+echo "Fecha cambiada satisfactoriamente en usajoobleFULL.xml \n";
+echo "<br>";
+}//If Borrado
+}//If Apertura
 ?>
