@@ -104,15 +104,4 @@ function multiexplode ($delimiters,$string) {
 	$launch = explode($delimiters[0], $ready);
 	return  $launch;
 }
-// uso
-
-
-// foreach ($exploded as $key => $tag ) {
-//      echo $tag."<br>";
-//  }
-// $list = '212,232,34,45,456,56,78';
-// $tag_array = explode(',', $list );
-// foreach ($tag_array as $key => $tag ) {
-//     echo $tag."<br>";
-// }
 ?>
