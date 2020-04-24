@@ -2,9 +2,27 @@
 /*--------------------------
 //Adzuna a mortage
 --------------------------*/
+// $new_name = 'jobsinlasvegas.net.csv';
+ 
+// $url = 'https://hallimjolken.com/api/v2/9to5/jobsinlasvegas.net.csv';
+// $file   = file($url);
+ 
+// $result = file_put_contents($new_name, $file);
+
+
 $fp = fopen("jobsinlasvegas.net.csv", "r");
 $contents = fread($fp, filesize("jobsinlasvegas.net.csv"));
 $fz = filesize("jobsinlasvegas.net.csv");
+$contents = str_replace("\n",";",$contents);
+$contents = str_replace("amp;","amp:",$contents);
+$contents = str_replace("px;","px:",$contents);
+$contents = str_replace("\"\";","\"\":",$contents);
+$contents = str_replace(";\"\"",":\"\"",$contents);
+$contents = str_replace("pt;","pt:",$contents);
+$contents = str_replace("serif;","serif:",$contents);
+$contents = str_replace("pt;","pt:",$contents);
+$contents = str_replace("; ",": ",$contents);
+$contents = str_replace(";'",":'",$contents);
 $launch = explode(";", $contents);
 $cs = 0;
 for ($i=0; $i <$fz ; $i++) { 
@@ -12,7 +30,7 @@ for ($i=0; $i <$fz ; $i++) {
 		$cs++;
 	}
 }
-echo $cs;
+//echo $cs;
 $aid[] = 0;
 $aurl[] = 0;
 $atitle[] = 0;
@@ -29,8 +47,7 @@ $e = 3;
 $f = 12;
 $g = 5;
 $h = 7;
-for ($i=0; $i <$cs*14 ; $i++) {
-	if ($launch[$i] == "\n") {
+for ($i=0; $i <43 ; $i++) {
 	$aid[$i] = $launch[$a];
 	$a= $a +15;
 	$aurl[$i] = $launch[$b];
@@ -47,14 +64,12 @@ for ($i=0; $i <$cs*14 ; $i++) {
 	$g= $g +15;
 	$atime[$i] = $launch[$h];
 	$h= $h +15;
-	$cs = $cs+14;
-	}
 	
 }
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+$titulo_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <jobs>";
-for ($i=0; $i < 37 ; $i++) { 
-echo "<job>
+for ($i=1; $i < 43 ; $i++) { 
+$for_xml = "<job>
 <id>
 <![CDATA[$aid[$i]]]>
 </id> 
@@ -84,7 +99,17 @@ $adesc[$i]
 </job>
 ";
 }
-echo "</jobs>";
+
+$fin_xml = "</jobs>";
 
 fclose($fp);
+$cadena_xml = $titulo_xml.$for_xml.$fin_xml;
+
+$archi_xml = simplexml_load_string($cadena_xml);
+        /// volcamos el XML
+      header("content-type: application/xml; charset=UTF-8");
+      header('Content-Disposition: attachment; filename="jobsinlasvegas.xml"');
+      echo $archi_xml->asXML();
+
+
 ?>

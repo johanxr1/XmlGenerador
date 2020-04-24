@@ -23,7 +23,7 @@ $e = 3;
 $f = 12;
 $g = 5;
 $h = 7;
-for ($i=0; $i <37 ; $i++) {
+for ($i=0; $i <20 ; $i++) {
 	$aid[$i] = $launch[$a];
 	$a= $a +15;
 	$aurl[$i] = $launch[$b];
@@ -43,7 +43,7 @@ for ($i=0; $i <37 ; $i++) {
 }
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <jobs>";
-for ($i=0; $i < 37 ; $i++) { 
+for ($i=0; $i <20 ; $i++) { 
 echo "<job>
 <id>
 <![CDATA[$aid[$i]]]>
