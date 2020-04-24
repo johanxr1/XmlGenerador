@@ -1,12 +1,45 @@
 <?php
 /*--------------------------
-//Adzuna a mortage
+//Jobsinlasvegas .xml generador con el .csv
 --------------------------*/
+$new_name = 'jobsinlasvegas.net.csv';
+$url = 'https://hallimjolken.com/api/v2/9to5/jobsinlasvegas.net.csv';
+$file   = file($url);
+$result = file_put_contents($new_name, $file);
+
+$for_xml = "";
 $fp = fopen("mortagejobs.org.csv", "r");
 $contents = fread($fp, filesize("mortagejobs.org.csv"));
 $fz = filesize("mortagejobs.org.csv");
+$cs = 0;
+for ($i=0; $i <$fz ; $i++) { 
+	if ($contents[$i] == "\n") {
+		$cs++;
+	}
+}
+$contents = str_replace("\n",";",$contents);
+$contents = str_replace("amp;","amp:",$contents);
+$contents = str_replace("px;","px:",$contents);
+$contents = str_replace("\"\";","\"\":",$contents);
+$contents = str_replace(";\"\"",":\"\"",$contents);
+$contents = str_replace("pt;","pt:",$contents);
+$contents = str_replace("serif;","serif:",$contents);
+$contents = str_replace("pt;","pt:",$contents);
+$contents = str_replace("; ",": ",$contents);
+$contents = str_replace(";'",":'",$contents);
+$contents = str_replace("&rsquo;","",$contents);
+$contents = str_replace("&lsquo;","",$contents);
 $launch = explode(";", $contents);
-
+$launch = str_replace("amp:","amp;",$launch);
+$launch = str_replace("px:","px;",$launch);
+$launch = str_replace("\"\":","\"\";",$launch);
+$launch = str_replace(":\"\"",";\"\"",$launch);
+$launch = str_replace("pt:","pt;",$launch);
+$launch = str_replace("serif:","serif;",$launch);
+$launch = str_replace("pt:","pt;",$launch);
+$launch = str_replace(": ","; ",$launch);
+$launch = str_replace(":'",";'",$launch);
+//echo $cs;
 $aid[] = 0;
 $aurl[] = 0;
 $atitle[] = 0;
@@ -23,7 +56,7 @@ $e = 3;
 $f = 12;
 $g = 5;
 $h = 7;
-for ($i=0; $i <20 ; $i++) {
+for ($i=0; $i <$cs ; $i++) {
 	$aid[$i] = $launch[$a];
 	$a= $a +15;
 	$aurl[$i] = $launch[$b];
@@ -41,10 +74,10 @@ for ($i=0; $i <20 ; $i++) {
 	$atime[$i] = $launch[$h];
 	$h= $h +15;
 }
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
+$titulo_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <jobs>";
-for ($i=0; $i <20 ; $i++) { 
-echo "<job>
+for ($i=1; $i < $cs ; $i++) { 
+$for_xml = $for_xml . "<job>
 <id>
 <![CDATA[$aid[$i]]]>
 </id> 
@@ -73,8 +106,17 @@ $adesc[$i]
 <contract_time><![CDATA[ part_time ]]></contract_time>
 </job>
 ";
-}
-echo "</jobs>";
+}//for
 
+$fin_xml = "</jobs>";
 fclose($fp);
+$cadena_xml = $titulo_xml.$for_xml.$fin_xml;
+if (file_exists("mortagejobs.xml")){
+	unlink("mortagejobs.xml");
+}
+$archi_xml = simplexml_load_string($cadena_xml);
+        /// volcamos el XML
+      header("content-type: application/xml; charset=UTF-8");
+      header('Content-Disposition: attachment; filename="mortagejobs.xml"');
+      echo $archi_xml->asXML();
 ?>
