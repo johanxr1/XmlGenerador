@@ -1,9 +1,9 @@
 <?php
 /*--------------------------
-//Jobsinlasvegas .xml generador con el .csv
+//Mortagejobs .xml generador con el .csv
 --------------------------*/
-$new_name = 'jobsinlasvegas.net.csv';
-$url = 'https://hallimjolken.com/api/v2/9to5/jobsinlasvegas.net.csv';
+$new_name = 'mortagejobs.org.csv';
+$url = 'https://hallimjolken.com/api/v2/9to5/mortagejobs.org.csv';
 $file   = file($url);
 $result = file_put_contents($new_name, $file);
 
@@ -12,7 +12,7 @@ $fp = fopen("mortagejobs.org.csv", "r");
 $contents = fread($fp, filesize("mortagejobs.org.csv"));
 $fz = filesize("mortagejobs.org.csv");
 $cs = 0;
-for ($i=0; $i <$fz ; $i++) { 
+for ($i=0; $i <$fz ; $i++) {
 	if ($contents[$i] == "\n") {
 		$cs++;
 	}
@@ -110,13 +110,20 @@ $adesc[$i]
 
 $fin_xml = "</jobs>";
 fclose($fp);
-$cadena_xml = $titulo_xml.$for_xml.$fin_xml;
-if (file_exists("mortagejobs.xml")){
-	unlink("mortagejobs.xml");
+$cadena_xml = $for_xml.$fin_xml;
+if (!$jp = fopen("jobsinlasvegas.xml", "a+")){
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+}else{
+	fwrite($jp, $cadena_xml);
+	fclose($jp);
+	echo "Actualizado satisfactoriamente";
 }
-$archi_xml = simplexml_load_string($cadena_xml);
-        /// volcamos el XML
-      header("content-type: application/xml; charset=UTF-8");
-      header('Content-Disposition: attachment; filename="mortagejobs.xml"');
-      echo $archi_xml->asXML();
+// if (file_exists("mortagejobs.xml")){
+// 	unlink("mortagejobs.xml");
+// }
+// $archi_xml = simplexml_load_string($cadena_xml);
+//         /// volcamos el XML
+//       header("content-type: application/xml; charset=UTF-8");
+//       header('Content-Disposition: attachment; filename="mortagejobs.xml"');
+//       echo $archi_xml->asXML();
 ?>

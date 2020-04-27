@@ -76,7 +76,7 @@ for ($i=0; $i <$cs ; $i++) {
 }
 $titulo_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>
 <jobs>";
-for ($i=1; $i < $cs ; $i++) { 
+for ($i=1; $i < $cs ; $i++) {
 $for_xml = $for_xml . "<job>
 <id>
 <![CDATA[$aid[$i]]]>
@@ -110,13 +110,21 @@ $adesc[$i]
 
 $fin_xml = "</jobs>";
 fclose($fp);
-$cadena_xml = $titulo_xml.$for_xml.$fin_xml;
-if (file_exists("jobsinlasvegas.xml")){
-	unlink("jobsinlasvegas.xml");
+$cadena_xml = $titulo_xml.$for_xml;
+// if (file_exists("jobsinlasvegas.xml")){
+// 	unlink("jobsinlasvegas.xml");
+// }
+if (!$jp = fopen("jobsinlasvegas.xml", "w+")){
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+}else{
+	fwrite($jp, "");
+	fwrite($jp, $cadena_xml);
+	fclose($jp);
+	echo "Actualizado satisfactoriamente";
 }
-$archi_xml = simplexml_load_string($cadena_xml);
-        /// volcamos el XML
-      header("content-type: application/xml; charset=UTF-8");
-      header('Content-Disposition: attachment; filename="jobsinlasvegas.xml"');
-      echo $archi_xml->asXML();
+// $archi_xml = simplexml_load_string($cadena_xml);
+//         /// volcamos el XML
+//       header("content-type: application/xml; charset=UTF-8");
+//       header('Content-Disposition: attachment; filename="jobsinlasvegas.xml"');
+//       echo $archi_xml->asXML();
 ?>
