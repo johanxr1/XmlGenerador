@@ -249,4 +249,128 @@ echo "Fecha cambiada satisfactoriamente en usajoobleFULL.xml \n";
 echo "<br>";
 }//If Borrado
 }//If Apertura
+
+/*------------------------
+
+//Actualizacion de jobliftCAFr.xml
+
+------------------------*/
+
+
+if (!$fp = fopen("jobliftCAFr.xml", "a+")){
+
+    echo "No se ha podido abrir el archivo";
+
+}else{
+
+$contents = fread($fp, filesize("jobliftCAFr.xml"));
+
+$posicion_inicio = strpos($contents, "<publishDate>");
+
+$paso1 = substr($contents, $posicion_inicio,23);
+
+if (!$fp = fopen("jobliftCAFr.xml", "w+")){
+
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+
+}else{
+
+$paso2 = str_replace($paso1, "<publishDate>$fechae", $contents);
+
+fwrite($fp, "");
+
+fwrite($fp, $paso2);
+
+fclose($fp);
+
+echo "Fecha cambiada satisfactoriamente en jobliftCAFr.xml \n";
+
+echo "<br>";
+
+}//If Borrado
+
+}//If Apertura
+
+/*------------------------
+
+//Actualizacion de jobliftCAeng.xml
+
+------------------------*/
+
+
+if (!$fp = fopen("jobliftCAeng.xml", "a+")){
+
+    echo "No se ha podido abrir el archivo";
+
+}else{
+
+$contents = fread($fp, filesize("jobliftCAeng.xml"));
+
+$posicion_inicio = strpos($contents, "<publishDate>");
+
+$paso1 = substr($contents, $posicion_inicio,23);
+
+if (!$fp = fopen("jobliftCAeng.xml", "w+")){
+
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+
+}else{
+
+$paso2 = str_replace($paso1, "<publishDate>$fechae", $contents);
+
+fwrite($fp, "");
+
+fwrite($fp, $paso2);
+
+fclose($fp);
+
+echo "Fecha cambiada satisfactoriamente en jobliftCAeng.xml \n";
+
+echo "<br>";
+
+}//If Borrado
+
+}//If Apertura
+
+/*------------------------
+
+//Actualizacion de jobliftUS.xml
+
+------------------------*/
+
+
+if (!$fp = fopen("jobliftUS.xml", "a+")){
+
+    echo "No se ha podido abrir el archivo";
+
+}else{
+
+$contents = fread($fp, filesize("jobliftUS.xml"));
+
+$posicion_inicio = strpos($contents, "<publishDate>");
+
+$paso1 = substr($contents, $posicion_inicio,23);
+
+if (!$fp = fopen("jobliftUS.xml", "w+")){
+
+    echo "Error al eliminar contenido del archivo. Problema de permisos";
+
+}else{
+
+$paso2 = str_replace($paso1, "<publishDate>$fechae", $contents);
+
+fwrite($fp, "");
+
+fwrite($fp, $paso2);
+
+fclose($fp);
+
+echo "Fecha cambiada satisfactoriamente en jobliftUS.xml \n";
+
+echo "<br>";
+
+}//If Borrado
+
+}//If Apertura
+
 ?>

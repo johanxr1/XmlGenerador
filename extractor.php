@@ -2,8 +2,8 @@
 include 'jobsinlasvegas.php';
 
 
-$exploded = multiexplode1(array(";","\n"),$text);
-// $id[0];
+$exploded = multiexplode1(array(";"),$text);
+//$id[0];
 // $datepublished[0];
 // $dateexpiration[0];
 // $organization[0];
@@ -18,9 +18,12 @@ $exploded = multiexplode1(array(";","\n"),$text);
 // $description[0];
 // $skills[0];
 // $url[0];
-for ($i=15; $i <955 ; $i++) {
-	echo $exploded[$i]."-";
-	$i=$i+13;
+for ($i=0; $i <955 ; $i++) {
+	if ($text == "\n") {
+		echo $exploded[$i+1]."-";
+	}
+	
+	
 
 }
 

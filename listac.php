@@ -18,6 +18,14 @@ for ($i=0; $i < $max; $i++) {
 	}
 	//echo $nlista[$i]."\n";
 }
+for ($i=0; $i <200 ; $i++) {
+	if ($i % 2 == 0) {
+		echo $exploded1[$i].".";
+	}
+	else{
+		echo $exploded1[$i].",";
+	}
+}
 for ($i=0; $i <6852 ; $i++) {
 	if ($i % 2 == 0) {
 		echo $nlista[$i].".";
